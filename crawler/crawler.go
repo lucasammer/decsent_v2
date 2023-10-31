@@ -22,6 +22,7 @@ func readLines(path string) ([]string, error) {
     return lines, scanner.Err()
 }
 
+var threads = 0;
 func main(){
 	fmt.Println("Initialising crawler...");
 	lines, err := readLines("links.txt");
@@ -29,4 +30,7 @@ func main(){
 		log.Fatalln(err);
 	}
 	fmt.Println("Started crawling...");
+	for i := 0; i < len(lines); i++{
+		fmt.Println(lines[i]);
+	}
 }
