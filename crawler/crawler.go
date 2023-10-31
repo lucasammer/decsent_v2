@@ -23,6 +23,7 @@ func readLines(path string) ([]string, error) {
 }
 
 var threads = 0;
+const maxthreads = 30;
 func main(){
 	fmt.Println("Initialising crawler...");
 	lines, err := readLines("links.txt");
