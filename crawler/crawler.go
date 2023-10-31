@@ -24,6 +24,7 @@ func readLines(path string) ([]string, error) {
 
 var threads = 0;
 const maxthreads = 30;
+var layers [][]string;
 func main(){
 	fmt.Println("Initialising crawler...");
 	lines, err := readLines("links.txt");
@@ -31,7 +32,10 @@ func main(){
 		log.Fatalln(err);
 	}
 	fmt.Println("Started crawling...");
+	var layer []string;
 	for i := 0; i < len(lines); i++{
 		fmt.Println(lines[i]);
+		layer = append(layer, lines[i]);
 	}
+	layers = append(layers, layer)
 }
