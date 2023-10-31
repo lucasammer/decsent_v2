@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -23,5 +24,9 @@ func readLines(path string) ([]string, error) {
 
 func main(){
 	fmt.Println("Initialising crawler...");
+	lines, err := readLines("links.txt");
+	if err != nil{
+		log.Fatalln(err);
+	}
 	fmt.Println("Started crawling...");
 }
