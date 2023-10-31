@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const rateLimit = require("express-rate-limit");
 const fs = require("fs");
-const dataloc = __dirname + "/../findingsTEST.csv";
+const dataloc = __dirname + "/../findings.csv";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
