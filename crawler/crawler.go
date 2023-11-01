@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -54,13 +55,18 @@ func visit(url string){
 		fmt.Printf("[visit] !!! Failed getting %s !!!\n", url);
 		return;
 	}
-	body, err := ioutil.ReadAll(result.Body);
-	if err != nil{
-		fmt.Printf("[visit] !!! Failed getting %s !!!\n", url);
-		return;
+	tkn := html.NewTokenizer(result.Body);
+	for{
+		tt := tkn.Next();
+
+		if tt == html.ErrorToken {
+			if tkn.Err() == io.EOF {
+                return
+            }
+			fmt.Printf("[visit] !!! Failed parsing %s !!!\n", url);
+            return
+		}
 	}
-	sb := string(body);
-	tkn := html.NewTokenizer(sb);
 }
 
 func parseRobots(robotsFile string, source string){
