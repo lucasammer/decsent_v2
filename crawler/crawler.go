@@ -33,27 +33,19 @@ var currentLayer = 0;
 var disallowed []string;
 const useragent = "decsentCrawler";
 
-type Userinfo struct {
-	username    string
-	password    string
-	passwordSet bool
+func isIllegal(url string) (isDisallowed bool){
+	for i := 0; i < len(disallowed); i++ {
+			if strings.Contains(disallowed[i], url) {
+			return false;
+		}
+	}
+	return true;
 }
 
-type URL struct {
-	Scheme      string
-	Opaque      string    // encoded opaque data
-	User        *Userinfo // username and password information
-	Host        string    // host or host:port
-	Path        string    // path (relative paths may omit leading slash)
-	RawPath     string    // encoded path hint (see EscapedPath method)
-	ForceQuery  bool      // append a query ('?') even if RawQuery is empty
-	RawQuery    string    // encoded query values, without '?'
-	Fragment    string    // fragment for references, without '#'
-	RawFragment string    // encoded fragment hint (see EscapedFragment method)
-}
-
-func visit(url *URL){
-	// Visit said url
+func visit(url string){
+	if isIllegal(url){
+		fmt.Printf("[visit] Not allowed to visit %s\n", url);
+	}
 }
 
 func parseRobots(robotsFile string, source string){
