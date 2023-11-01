@@ -9,6 +9,8 @@ import (
 	"net/url"
 	"os"
 	"strings"
+
+	"golang.org/x/net/html"
 )
 
 func readLines(path string) ([]string, error) {
@@ -45,7 +47,20 @@ func isIllegal(url string) (isDisallowed bool){
 func visit(url string){
 	if isIllegal(url){
 		fmt.Printf("[visit] Not allowed to visit %s\n", url);
+		return;
 	}
+	result, err := http.Get(url);
+	if err != nil{
+		fmt.Printf("[visit] !!! Failed getting %s !!!\n", url);
+		return;
+	}
+	body, err := ioutil.ReadAll(result.Body);
+	if err != nil{
+		fmt.Printf("[visit] !!! Failed getting %s !!!\n", url);
+		return;
+	}
+	sb := string(body);
+	tkn := html.NewTokenizer(sb);
 }
 
 func parseRobots(robotsFile string, source string){
